@@ -1,10 +1,15 @@
 require 'gosu'
 require_relative 'engine/entity'
 require_relative 'entities/cat'
+require_relative 'world'
 
 RES_ROOT = File.expand_path(File.join(__dir__, "..", "res"))
 
 Gosu::enable_undocumented_retrofication
+
+$world = World.new
+$world.floors << World::Floor.new(Point.new(50, 400), 1000)
+$world.floors << World::Floor.new(Point.new(500, 200), 300)
 
 class GameWindow < Gosu::Window
   def initialize
@@ -14,12 +19,10 @@ class GameWindow < Gosu::Window
   end
 
   def update
-    @cat.tick
-
     if Gosu.button_down?(Gosu::KB_W)
       @cat.jump 
     end
-
+    
     if Gosu.button_down?(Gosu::KB_D)
       @cat.move_right
     elsif Gosu.button_down?(Gosu::KB_A)
@@ -27,10 +30,19 @@ class GameWindow < Gosu::Window
     else
       @cat.idle
     end
+
+    @cat.tick
   end
 
   def draw
     @cat.draw
+
+    $world.floors.each do |floor|
+      Gosu.draw_line(
+        floor.position.x, floor.position.y, Gosu::Color::WHITE,
+        floor.position.x + floor.width, floor.position.y, Gosu::Color::WHITE
+      )
+    end
   end
 end
 

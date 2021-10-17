@@ -23,6 +23,10 @@ class Entity
     self.animation = :_static
   end
 
+  def image
+    @current_animation&.image
+  end
+
   def animation=(anim_name)
     return if @current_animation_name == anim_name
 
@@ -38,11 +42,10 @@ class Entity
   end
 
   def draw
-    img = @current_animation&.image
-    return unless img
+    return unless image
 
-    img.draw(
-      position.x + (mirror_x ? img.width * scaling : 0), position.y, position.z,
+    image.draw(
+      position.x + (mirror_x ? image.width * scaling : 0), position.y, position.z,
       scaling * (mirror_x ? -1 : 1),
       scaling
     )
