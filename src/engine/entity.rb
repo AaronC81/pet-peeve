@@ -3,12 +3,13 @@ require_relative 'animation'
 require_relative 'point'
  
 class Entity
-  attr_accessor :position, :animations, :scaling, :mirror_x
+  attr_accessor :position, :animations, :scaling, :mirror_x, :rotation
 
   def initialize(position: nil, animations: nil, scaling: nil)
     @position = position || Point.new(0, 0)
     @animations = animations || {}
     @scaling = scaling || 1
+    @rotation = 0
 
     @current_animation = nil
     @current_animation_name = nil
@@ -37,8 +38,9 @@ class Entity
   def draw
     return unless image
 
-    image.draw(
+    image.draw_rot(
       position.x + (mirror_x ? image.width * scaling : 0), position.y, position.z,
+      rotation, 0, 0,
       scaling * (mirror_x ? -1 : 1),
       scaling
     )

@@ -3,6 +3,9 @@ require_relative 'entity'
 class GravityEntity < Entity
   FLOOR_CLIP_THRESHOLD = 20
 
+  attr_accessor :base_floors_only
+  alias base_floors_only? base_floors_only
+
   def initialize(*a, **k)
     super(*a, **k)
 
@@ -35,7 +38,8 @@ class GravityEntity < Entity
       if v_dist >= 0 && v_dist < FLOOR_CLIP_THRESHOLD \
         && !rising? \
         && position.x + (image.height * scaling * left_floor_collision_scaling) > floor.position.x \
-        && position.x + (image.height * scaling * right_floor_collision_scaling) < (floor.position.x + floor.width)
+        && position.x + (image.height * scaling * right_floor_collision_scaling) < (floor.position.x + floor.width) \
+        && (base_floors_only? ? floor.base : true)
         
         self.position.y = floor.position.y - image.height * scaling
         true

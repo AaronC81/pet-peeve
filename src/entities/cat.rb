@@ -1,7 +1,9 @@
 require_relative '../engine/gravity_entity'
+require_relative 'destructable_object'
 
 class Cat < GravityEntity
   MOVE_SPEED = 5
+  SWIPE_COOLDOWN_FRAMES = 8
 
   def initialize(position)
     cat_tiles = Gosu::Image.load_tiles(File.join(RES_ROOT, "cat.png"), -8, -10, retro: true)
@@ -13,33 +15,50 @@ class Cat < GravityEntity
         "run" => Animation.new(cat_tiles[40..47], 4),
         "jump" => Animation.new(cat_tiles[66..66], 1000),
         "fall" => Animation.new(cat_tiles[67..67], 1000),
+        "swipe" => Animation.static(cat_tiles[60]),
       },
       scaling: 5,
     )
 
     self.animation = "idle"
+
+    @swipe_cooldown = 0
   end
 
   def move_right
     self.position.x += MOVE_SPEED
-    self.animation = "run" unless jumping?
+    self.animation = "run" unless jumping? || swipe_cooling_down?
     self.mirror_x = false
   end
 
   def move_left
     self.position.x -= MOVE_SPEED
-    self.animation = "run" unless jumping?
+    self.animation = "run" unless jumping? || swipe_cooling_down?
     self.mirror_x = true
   end
 
   def idle
-    self.animation = "idle" unless jumping? || falling?
+    self.animation = "idle" unless jumping? || falling? || swipe_cooling_down?
   end
 
   def jump
     return if jumping? || falling?
     @y_speed = 20.0
     self.animation = "jump"
+  end
+  
+  def swipe
+    return if swipe_cooling_down?
+    @swipe_cooldown = SWIPE_COOLDOWN_FRAMES
+
+    self.animation = "swipe"
+
+    # TODO: check collision at paw
+    $world.find_entity_at(
+      position.x + image.width * scaling / 2,
+      position.y + image.height * scaling * 0.9,
+      type: DestructableObject,
+    )&.knock_off
   end
 
   def tick
@@ -48,8 +67,14 @@ class Cat < GravityEntity
     if falling?
       self.animation = "fall"
     end
+
+    @swipe_cooldown -= 1 if swipe_cooling_down?
   end
 
   def left_floor_collision_scaling; 0.7 end
   def right_floor_collision_scaling; 0.25 end
+
+  def swipe_cooling_down?
+    @swipe_cooldown > 0
+  end
 end

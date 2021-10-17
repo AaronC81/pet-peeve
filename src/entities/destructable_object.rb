@@ -13,5 +13,17 @@ class DestructableObject < GravityEntity
     )
  
     self.animation = "static"
+    @rotation_speed = 0
+  end
+
+  def knock_off
+    self.base_floors_only = true
+    @y_speed = 10
+    @rotation_speed = 1
+  end
+
+  def tick
+    super
+    @rotation += @rotation_speed
   end
 end
