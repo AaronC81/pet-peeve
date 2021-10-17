@@ -6,6 +6,6 @@ class Point
   def initialize(x, y, z = 0)
     @x = x
     @y = y
-    @z = 0
+    @z = z
   end
 end

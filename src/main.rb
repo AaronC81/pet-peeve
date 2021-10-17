@@ -16,7 +16,7 @@ class GameWindow < Gosu::Window
   def initialize
     super(1600, 900)
 
-    @cat = Cat.new(Point.new(200, 200))
+    @cat = Cat.new(Point.new(200, 200, 1))
     @other_entities = [
       DestructableObject.new("small_tv", Point.new(100, 100)),
     ]

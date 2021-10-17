@@ -1,6 +1,6 @@
 require_relative '../engine/entity'
 
-class DestructableObject < Entity
+class DestructableObject < GravityEntity
   def initialize(id, position)
     img = Gosu::Image.new(File.join(RES_ROOT, "objects", "#{id}.png"))
 
@@ -11,7 +11,7 @@ class DestructableObject < Entity
       },
       scaling: 5,
     )
-
+ 
     self.animation = "static"
   end
 end
