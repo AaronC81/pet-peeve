@@ -4,6 +4,7 @@ class World
   def initialize
     @floors = []
     @entities = []
+    @cat = nil
   end
 
   def find_entity_at(x, y, type: nil)
@@ -17,4 +18,5 @@ class World
   end
 
   attr_reader :floors, :entities
+  attr_accessor :cat
 end

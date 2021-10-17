@@ -20,6 +20,7 @@ class GameWindow < Gosu::Window
     super(1600, 900)
 
     @cat = Cat.new(Point.new(200, 200, 100))
+    $world.cat = @cat
   end
 
   def update
