@@ -1,6 +1,7 @@
 require 'gosu'
 require_relative 'engine/entity'
 require_relative 'entities/cat'
+require_relative 'entities/destructable_object'
 require_relative 'world'
 
 RES_ROOT = File.expand_path(File.join(__dir__, "..", "res"))
@@ -15,7 +16,10 @@ class GameWindow < Gosu::Window
   def initialize
     super(1600, 900)
 
-    @cat = Cat.new
+    @cat = Cat.new(Point.new(200, 200))
+    @other_entities = [
+      DestructableObject.new("small_tv", Point.new(100, 100)),
+    ]
   end
 
   def update
@@ -32,10 +36,12 @@ class GameWindow < Gosu::Window
     end
 
     @cat.tick
+    @other_entities.map(&:tick)
   end
 
   def draw
     @cat.draw
+    @other_entities.map(&:draw)
 
     $world.floors.each do |floor|
       Gosu.draw_line(

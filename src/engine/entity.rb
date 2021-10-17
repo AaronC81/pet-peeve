@@ -16,13 +16,6 @@ class Entity
     @mirror_x = false
   end
 
-  def image=(image)
-    raise "use Entity animations or image, not both" unless [[], [:_static]].include?(@animations.keys)
-
-    @animations = { _static: Animation::new([image], 1000) }
-    self.animation = :_static
-  end
-
   def image
     @current_animation&.image
   end

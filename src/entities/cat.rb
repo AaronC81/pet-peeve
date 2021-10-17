@@ -4,11 +4,11 @@ class Cat < Entity
   MOVE_SPEED = 5
   FLOOR_CLIP_THRESHOLD = 20
 
-  def initialize
+  def initialize(position)
     cat_tiles = Gosu::Image.load_tiles(File.join(RES_ROOT, "cat.png"), -8, -10, retro: true)
 
     super(
-      position: Point.new(200, 200),
+      position: position,
       animations: {
         "idle" => Animation.new(cat_tiles[0..3], 8),
         "run" => Animation.new(cat_tiles[40..47], 4),

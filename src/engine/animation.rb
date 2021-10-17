@@ -6,12 +6,18 @@ class Animation
     reset
   end
 
+  def self.static(image)
+    new([image], -1)
+  end
+
   def reset
     @ticks = 0
     @image_idx = 0
   end
 
   def tick
+    return if @ticks_per_image == -1
+
     @ticks += 1
     if @ticks == @ticks_per_image
       @image_idx += 1
