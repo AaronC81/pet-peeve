@@ -16,12 +16,15 @@ class GameWindow < Gosu::Window
   def update
     @cat.tick
 
+    if Gosu.button_down?(Gosu::KB_W)
+      @cat.jump 
+    end
+
     if Gosu.button_down?(Gosu::KB_D)
       @cat.move_right
     elsif Gosu.button_down?(Gosu::KB_A)
-      @cat.move_left 
+      @cat.move_left
     else
-      # TODO: will need refinement when jumping added
       @cat.idle
     end
   end
