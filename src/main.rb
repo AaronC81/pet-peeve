@@ -11,14 +11,15 @@ Gosu::enable_undocumented_retrofication
 $world = World.new
 $world.floors << World::Floor.new(Point.new(50, 400), 1000, false)
 $world.floors << World::Floor.new(Point.new(500, 200), 300, false)
+$world.floors << World::Floor.new(Point.new(200, 230), 150, false)
 
-$world.entities << DestructableObject.new("small_tv", Point.new(100, 100))
+$world.entities << DestructableObject.new("small_tv", Point.new(225, 100, 2))
 
 class GameWindow < Gosu::Window
   def initialize
     super(1600, 900)
 
-    @cat = Cat.new(Point.new(200, 200, 1))
+    @cat = Cat.new(Point.new(200, 200, 100))
   end
 
   def update
@@ -52,6 +53,8 @@ class GameWindow < Gosu::Window
         floor.position.x + floor.width, floor.position.y, Gosu::Color::WHITE
       )
     end
+
+    Gosu::Image.new(File.join(RES_ROOT, "scenery", "small_chest_of_drawers.png"), retro: true).draw(200, 230, 0, 5, 5)
   end
 end
 
