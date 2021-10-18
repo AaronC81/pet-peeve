@@ -10,11 +10,15 @@ RES_ROOT = File.expand_path(File.join(__dir__, "..", "res"))
 Gosu::enable_undocumented_retrofication
 
 $world = World.new
-$world.extra_floors << World::Floor.new(Point.new(50, 400), 1000, false)
-$world.extra_floors << World::Floor.new(Point.new(500, 200), 300, false)
+$world.extra_floors << World::Floor.new(Point.new(50, 700), 1000, false)
 
-$world.entities << Scenery.new("small_chest_of_drawers", Point.new(200, 230, 2), floor: true)
-$world.entities << DestructableObject.new("small_tv", Point.new(225, 100, 2))
+$world.entities << Scenery.new("small_chest_of_drawers", Point.new(200, 530, 2), floor: true)
+$world.entities << DestructableObject.new("radio", Point.new(210, 400, 2))
+
+$world.entities << Scenery.new("small_table", Point.new(600, 580, 2), floor: true)
+$world.entities << DestructableObject.new("alarm_clock", Point.new(620, 530, 2))
+$world.entities << DestructableObject.new("mug", Point.new(690, 500, 2))
+$world.entities << DestructableObject.new("mug", Point.new(750, 500, 2))
 
 class GameWindow < Gosu::Window
   def initialize
