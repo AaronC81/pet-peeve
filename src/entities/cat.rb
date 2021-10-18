@@ -53,9 +53,8 @@ class Cat < GravityEntity
 
     self.animation = "swipe"
 
-    # TODO: check collision at paw
     $world.find_entity_at(
-      position.x + image.width * scaling / 2,
+      position.x + image.width * scaling / 2 + (image.width * scaling * 0.25 * (mirror_x ? -1 : 1)),
       position.y + image.height * scaling * 0.9,
       type: DestructableObject,
     )&.knock_off
