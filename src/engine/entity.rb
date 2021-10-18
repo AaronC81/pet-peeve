@@ -3,13 +3,14 @@ require_relative 'animation'
 require_relative 'point'
  
 class Entity
-  attr_accessor :position, :animations, :scaling, :mirror_x, :rotation
+  attr_accessor :position, :animations, :scaling, :mirror_x, :rotation, :floors
 
-  def initialize(position: nil, animations: nil, scaling: nil)
+  def initialize(position: nil, animations: nil, scaling: nil, floors: nil)
     @position = position || Point.new(0, 0)
     @animations = animations || {}
     @scaling = scaling || 1
     @rotation = 0
+    @floors = floors || []
 
     @current_animation = nil
     @current_animation_name = nil

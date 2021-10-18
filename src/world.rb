@@ -2,7 +2,7 @@ class World
   Floor = Struct.new("Floor", :position, :width, :base)
 
   def initialize
-    @floors = []
+    @extra_floors = []
     @entities = []
     @cat = nil
   end
@@ -17,6 +17,10 @@ class World
     end
   end
 
-  attr_reader :floors, :entities
+  def floors
+    @extra_floors + @entities.flat_map(&:floors)
+  end
+
+  attr_reader :extra_floors, :entities
   attr_accessor :cat
 end

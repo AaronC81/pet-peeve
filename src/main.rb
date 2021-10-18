@@ -2,6 +2,7 @@ require 'gosu'
 require_relative 'engine/entity'
 require_relative 'entities/cat'
 require_relative 'entities/destructable_object'
+require_relative 'entities/scenery'
 require_relative 'world'
 
 RES_ROOT = File.expand_path(File.join(__dir__, "..", "res"))
@@ -9,10 +10,10 @@ RES_ROOT = File.expand_path(File.join(__dir__, "..", "res"))
 Gosu::enable_undocumented_retrofication
 
 $world = World.new
-$world.floors << World::Floor.new(Point.new(50, 400), 1000, false)
-$world.floors << World::Floor.new(Point.new(500, 200), 300, false)
-$world.floors << World::Floor.new(Point.new(200, 230), 150, false)
+$world.extra_floors << World::Floor.new(Point.new(50, 400), 1000, false)
+$world.extra_floors << World::Floor.new(Point.new(500, 200), 300, false)
 
+$world.entities << Scenery.new("small_chest_of_drawers", Point.new(200, 230, 2), floor: true)
 $world.entities << DestructableObject.new("small_tv", Point.new(225, 100, 2))
 
 class GameWindow < Gosu::Window
@@ -54,8 +55,6 @@ class GameWindow < Gosu::Window
         floor.position.x + floor.width, floor.position.y, Gosu::Color::WHITE
       )
     end
-
-    Gosu::Image.new(File.join(RES_ROOT, "scenery", "small_chest_of_drawers.png"), retro: true).draw(200, 230, 0, 5, 5)
   end
 end
 
