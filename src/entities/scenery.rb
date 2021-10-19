@@ -15,7 +15,12 @@ class Scenery < Entity
     self.animation = "static"
 
     if floor
-      self.floors << World::Floor.new(position, img.width * scaling, false)
+      floor_offset = floor.is_a?(Integer) ? floor : 0
+      self.floors << World::Floor.new(Point.new(
+        position.x,
+        position.y + floor_offset,
+        position.z,
+      ), (img.width) * scaling, false)
     end
   end
 end
