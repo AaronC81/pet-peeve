@@ -1,7 +1,7 @@
 require_relative 'entity'
 
 class GravityEntity < Entity
-  FLOOR_CLIP_THRESHOLD = 40
+  FLOOR_CLIP_THRESHOLD = 30
 
   attr_accessor :base_floors_only
   alias base_floors_only? base_floors_only
