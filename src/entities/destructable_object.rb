@@ -1,7 +1,9 @@
 require_relative '../engine/entity'
+require_relative '../res'
 
 class DestructableObject < GravityEntity
   def initialize(id, position)
+    # TODO World already loads this, ditto with scenery
     img = Gosu::Image.new(File.join(RES_ROOT, "objects", "#{id}.png"))
 
     super(
@@ -9,7 +11,7 @@ class DestructableObject < GravityEntity
       animations: {
         "static" => Animation.static(img),
       },
-      scaling: 5,
+      scaling: GLOBAL_SCALE,
     )
  
     self.animation = "static"

@@ -1,4 +1,5 @@
 require_relative '../world'
+require_relative '../res'
 
 class Scenery < Entity
   def initialize(id, position, floor: false)
@@ -9,7 +10,7 @@ class Scenery < Entity
       animations: {
         "static" => Animation.static(img),
       },
-      scaling: 5,
+      scaling: GLOBAL_SCALE,
     )
   
     self.animation = "static"

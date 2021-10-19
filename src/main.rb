@@ -4,8 +4,7 @@ require_relative 'entities/cat'
 require_relative 'entities/destructable_object'
 require_relative 'entities/scenery'
 require_relative 'world'
-
-RES_ROOT = File.expand_path(File.join(__dir__, "..", "res"))
+require_relative 'res'
 
 Gosu::enable_undocumented_retrofication
 
@@ -18,24 +17,26 @@ def obj!(id, x, y)
 end
 
 $world = World.new
-$world.extra_floors << World::Floor.new(Point.new(50, 700), 1000, false)
+$world.extra_floors << World::Floor.new(Point.new(0, World::GLOBAL_FLOOR_Y), 1600, false)
 
-sc!("small_chest_of_drawers", 200, 530, true)
-obj!("radio", 210, 400)
+$world.generate
 
-sc!("small_table", 600, 580, true)
-obj!("alarm_clock", 620, 530)
-obj!("mug", 690, 500)
-obj!("mug", 750, 500)
+# sc!("small_chest_of_drawers", 200, 530, true)
+# obj!("radio", 210, 400)
 
-sc!("large_bed", 1000, 450, 100)
-obj!("pillow", 1050, 350)
-obj!("pillow", 1260, 350)
+# sc!("small_table", 600, 580, true)
+# obj!("alarm_clock", 620, 530)
+# obj!("mug", 690, 500)
+# obj!("mug", 750, 500)
 
-sc!("shelf", 400, 200, true)
-obj!("mantlepiece_clock", 540, 300)
-obj!("trophy_cup", 420, 250)
-sc!("shelf", 400, 350, true)
+# sc!("large_bed", 1000, 450, 100)
+# obj!("pillow", 1050, 350)
+# obj!("pillow", 1260, 350)
+
+# sc!("shelf", 400, 200, true)
+# obj!("mantlepiece_clock", 540, 300)
+# obj!("trophy_cup", 420, 250)
+# sc!("shelf", 400, 350, true)
 
 class GameWindow < Gosu::Window
   def initialize
