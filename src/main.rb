@@ -32,6 +32,11 @@ sc!("large_bed", 1000, 450, 100)
 obj!("pillow", 1050, 350)
 obj!("pillow", 1260, 350)
 
+sc!("shelf", 400, 200, true)
+obj!("mantlepiece_clock", 540, 300)
+obj!("trophy_cup", 420, 250)
+sc!("shelf", 400, 350, true)
+
 class GameWindow < Gosu::Window
   def initialize
     super(1600, 900)
