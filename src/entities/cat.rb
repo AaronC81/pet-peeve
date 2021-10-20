@@ -53,11 +53,21 @@ class Cat < GravityEntity
 
     self.animation = "swipe"
 
-    $world.find_entity_at(
+    # Two sample points, front and back of paw
+    obj = $world.find_entity_at(
       position.x + image.width * scaling / 2 + (image.width * scaling * 0.25 * (mirror_x ? -1 : 1)),
       position.y + image.height * scaling * 0.9,
       type: DestructableObject,
-    )&.knock_off
+    )
+    if obj
+      obj.knock_off
+    else
+      $world.find_entity_at(
+        position.x + image.width * scaling / 2 + (image.width * scaling * 0.15 * (mirror_x ? -1 : 1)),
+        position.y + image.height * scaling * 0.9,
+        type: DestructableObject,
+      )&.knock_off
+    end
   end
 
   def tick
