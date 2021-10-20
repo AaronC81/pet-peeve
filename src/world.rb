@@ -1,7 +1,8 @@
 require_relative 'res'
+require_relative 'entities/wall'
 
 class World
-  GLOBAL_FLOOR_Y = 700
+  GLOBAL_FLOOR_Y = 850
 
   Floor = Struct.new("Floor", :position, :width, :base)
 
@@ -41,6 +42,7 @@ class World
 
   OBJECTS = load_res_dir("objects")
   SCENERIES = load_res_dir("scenery")
+  WALLS = load_res_dir("walls")
 
   def self.object(name)
     OBJECTS.find { |k, _| k == name }
@@ -63,6 +65,9 @@ class World
   }
 
   def generate
+    wn, wi = WALLS.sample
+    $world.entities << Wall.new("beige")
+
     generation_pass(GROUND_SCENERIES, GLOBAL_FLOOR_Y) { (50..200).to_a.sample }
     generation_pass(ELEVATED_SCENERIES, GLOBAL_FLOOR_Y - 300) { (150..250).to_a.sample }
     generation_pass(ELEVATED_SCENERIES, GLOBAL_FLOOR_Y - 450) { (300..500).to_a.sample }
