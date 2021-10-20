@@ -12,6 +12,7 @@ class DestructableObject < GravityEntity
         "static" => Animation.static(img),
       },
       scaling: GLOBAL_SCALE,
+      gravity_enabled: false,
     )
  
     self.animation = "static"
@@ -20,6 +21,8 @@ class DestructableObject < GravityEntity
   end
 
   def knock_off
+    self.gravity_enabled = true
+
     # Give score
     if knocked_off?
       $state.juggle_object

@@ -119,9 +119,10 @@ class World
         $world.entities << DestructableObject.new(
           on, Point.new(
             scenery_x + object_x,
-            sy - oi.height * GLOBAL_SCALE,
+            # If object has non-default floor, consider that too
+            sy - oi.height * GLOBAL_SCALE + (floor.is_a?(Integer) ? floor : 0),
             2
-          )
+          ),
         )
 
         object_x += oi.width * GLOBAL_SCALE + padding_between_items

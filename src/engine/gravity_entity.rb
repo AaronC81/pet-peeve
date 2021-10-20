@@ -3,13 +3,14 @@ require_relative 'entity'
 class GravityEntity < Entity
   FLOOR_CLIP_THRESHOLD = 30
 
-  attr_accessor :base_floors_only
+  attr_accessor :base_floors_only, :gravity_enabled
   alias base_floors_only? base_floors_only
 
-  def initialize(*a, **k)
+  def initialize(*a, gravity_enabled: true, **k)
     super(*a, **k)
 
     @y_speed = 0.0
+    @gravity_enabled = gravity_enabled
   end
 
   def rising?
@@ -24,7 +25,7 @@ class GravityEntity < Entity
   def tick
     super
 
-    if !on_floor?
+    if gravity_enabled && !on_floor?
       self.position.y -= @y_speed.to_i
       @y_speed -= 0.9
     else
