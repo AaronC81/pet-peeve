@@ -1,5 +1,6 @@
 require_relative '../world'
 require_relative '../res'
+require_relative '../engine/entity'
 
 class Wall < Entity
   def initialize(id)

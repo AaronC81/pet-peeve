@@ -52,6 +52,10 @@ class World
     SCENERIES.find { |k, _| k == name }
   end
 
+  def self.wall(name)
+    WALLS.find { |k, _| k == name }
+  end
+
   NON_DEFAULT_FLOORS = {
     "large_bed" => 100,
   }
@@ -66,7 +70,7 @@ class World
 
   def generate
     wn, wi = WALLS.sample
-    $world.entities << Wall.new("beige")
+    $world.entities << Wall.new(wn)
 
     generation_pass(GROUND_SCENERIES, GLOBAL_FLOOR_Y) { (50..200).to_a.sample }
     generation_pass(ELEVATED_SCENERIES, GLOBAL_FLOOR_Y - 300) { (150..250).to_a.sample }
