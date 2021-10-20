@@ -20,6 +20,13 @@ class DestructableObject < GravityEntity
   end
 
   def knock_off
+    # Give score
+    if self.base_floors_only
+      $state.juggle_object
+    else
+      $state.destroy_object
+    end 
+
     self.base_floors_only = true
     @y_speed = 10
     @x_speed = 3 * ($world.cat.mirror_x ? -1 : 1)

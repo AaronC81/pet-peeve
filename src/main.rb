@@ -5,6 +5,7 @@ require_relative 'entities/destructable_object'
 require_relative 'entities/scenery'
 require_relative 'world'
 require_relative 'res'
+require_relative 'game_state'
 
 Gosu::enable_undocumented_retrofication
 
@@ -21,22 +22,7 @@ $world.extra_floors << World::Floor.new(Point.new(0, World::GLOBAL_FLOOR_Y), 160
 
 $world.generate
 
-# sc!("small_chest_of_drawers", 200, 530, true)
-# obj!("radio", 210, 400)
-
-# sc!("small_table", 600, 580, true)
-# obj!("alarm_clock", 620, 530)
-# obj!("mug", 690, 500)
-# obj!("mug", 750, 500)
-
-# sc!("large_bed", 1000, 450, 100)
-# obj!("pillow", 1050, 350)
-# obj!("pillow", 1260, 350)
-
-# sc!("shelf", 400, 200, true)
-# obj!("mantlepiece_clock", 540, 300)
-# obj!("trophy_cup", 420, 250)
-# sc!("shelf", 400, 350, true)
+$state = GameState.new
 
 class GameWindow < Gosu::Window
   def initialize
@@ -65,6 +51,7 @@ class GameWindow < Gosu::Window
 
     @cat.tick
     $world.entities.map(&:tick)
+    $state.tick
   end
 
   def draw
@@ -77,6 +64,8 @@ class GameWindow < Gosu::Window
         floor.position.x + floor.width, floor.position.y, Gosu::Color::WHITE
       )
     end
+
+    $state.draw
   end
 end
 
