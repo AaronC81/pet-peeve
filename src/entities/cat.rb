@@ -26,13 +26,13 @@ class Cat < GravityEntity
   end
 
   def move_right
-    self.position.x += MOVE_SPEED
+    self.position.x += MOVE_SPEED if position.x + image.width * GLOBAL_SCALE < 1640 - MOVE_SPEED
     self.animation = "run" unless jumping? || swipe_cooling_down?
     self.mirror_x = false
   end
 
   def move_left
-    self.position.x -= MOVE_SPEED
+    self.position.x -= MOVE_SPEED if position.x + 40 > MOVE_SPEED
     self.animation = "run" unless jumping? || swipe_cooling_down?
     self.mirror_x = true
   end
