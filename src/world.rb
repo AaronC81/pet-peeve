@@ -68,6 +68,10 @@ class World
     "default" => OBJECTS.reject { |k, _| %w{pillow stuffed_shark}.include?(k) },
   }
 
+  # So we do not get too many small objects bunched close to each other
+  # (This is a scaled size)
+  MINIMUM_OBJECT_WIDTH = 100
+
   def generate
     wn, wi = WALLS.sample
     $world.entities << Wall.new(wn)
@@ -103,6 +107,7 @@ class World
       loop do
         on, oi = OBJECT_SET_FOR_SCENERY[sn]&.sample || OBJECT_SET_FOR_SCENERY["default"].sample
         ogw = oi.width * GLOBAL_SCALE
+        ogw = [ogw, MINIMUM_OBJECT_WIDTH].max # TODO: leads to misaligned objects
         if objects_total_width + ogw < sgw
           objects << [on, oi]
           objects_total_width += ogw
