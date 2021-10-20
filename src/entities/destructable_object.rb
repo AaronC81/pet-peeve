@@ -22,6 +22,7 @@ class DestructableObject < GravityEntity
 
   def knock_off
     self.gravity_enabled = true
+    self.position.z = 99
 
     # Give score
     if knocked_off?

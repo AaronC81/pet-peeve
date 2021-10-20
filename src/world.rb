@@ -121,7 +121,7 @@ class World
             scenery_x + object_x,
             # If object has non-default floor, consider that too
             sy - oi.height * GLOBAL_SCALE + (floor.is_a?(Integer) ? floor : 0),
-            2
+            5
           ),
         )
 
