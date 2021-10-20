@@ -1,5 +1,6 @@
 require 'gosu'
 require_relative 'engine/entity'
+require_relative 'engine/transition'
 require_relative 'entities/cat'
 require_relative 'entities/destructable_object'
 require_relative 'entities/scenery'
@@ -23,6 +24,8 @@ $world.extra_floors << World::Floor.new(Point.new(0, World::GLOBAL_FLOOR_Y), 160
 $world.generate
 
 $state = GameState.new
+
+$transition = Transition.new
 
 class GameWindow < Gosu::Window
   def initialize
@@ -52,6 +55,7 @@ class GameWindow < Gosu::Window
     @cat.tick
     $world.entities.map(&:tick)
     $state.tick
+    $transition.tick
   end
 
   def draw
@@ -66,6 +70,7 @@ class GameWindow < Gosu::Window
     end
 
     $state.draw
+    $transition.draw
   end
 end
 

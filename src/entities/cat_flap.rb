@@ -33,6 +33,7 @@ class CatFlap < Entity
 
       # Next level!
       $world.next_level
+      @active = false
     end
   end
 end

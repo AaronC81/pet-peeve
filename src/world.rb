@@ -79,8 +79,12 @@ class World
 
   def next_level
     $state.level_complete
-    clear
-    generate
+
+    $transition.fade_out(40) do
+      clear
+      generate
+      $transition.fade_in(40) {}
+    end
   end
 
   def generate
