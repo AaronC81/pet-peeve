@@ -1,5 +1,6 @@
 require_relative 'res'
 require_relative 'entities/wall'
+require_relative 'entities/cat_flap'
 
 class World
   GLOBAL_FLOOR_Y = 850
@@ -72,6 +73,16 @@ class World
   # (This is a scaled size)
   MINIMUM_OBJECT_WIDTH = 100
 
+  def cleared
+    $world.entities.find { |e| e.is_a?(CatFlap) }.active = true
+  end
+
+  def next_level
+    $state.level_complete
+    clear
+    generate
+  end
+
   def generate
     wn, wi = WALLS.sample
     $world.entities << Wall.new(wn)
@@ -79,10 +90,12 @@ class World
     generation_pass(GROUND_SCENERIES, GLOBAL_FLOOR_Y) { (50..200).to_a.sample }
     generation_pass(ELEVATED_SCENERIES, GLOBAL_FLOOR_Y - 300) { (150..250).to_a.sample }
     generation_pass(ELEVATED_SCENERIES, GLOBAL_FLOOR_Y - 450) { (300..500).to_a.sample }
+
+    $world.entities << CatFlap.new(Point.new(100, GLOBAL_FLOOR_Y - 150, 1))
   end
 
   def generation_pass(sceneries, y, &x_padding_fn)
-    scenery_x = x_padding_fn.()
+    scenery_x = 300
 
     loop do
       # Pick an item of scenery

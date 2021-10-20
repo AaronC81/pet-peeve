@@ -14,8 +14,12 @@ class GameState
 
     # Is this room now empty?
     if $world.entities.filter { |x| x.is_a?(DestructableObject) }.all?(&:knocked_off?)
-      # TODO regenerate world
+      $world.cleared
     end
+  end
+
+  def level_complete
+    @score += 200
   end
 
   def juggle_object
