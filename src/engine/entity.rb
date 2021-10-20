@@ -3,7 +3,7 @@ require_relative 'animation'
 require_relative 'point'
  
 class Entity
-  attr_accessor :position, :animations, :scaling, :mirror_x, :rotation, :floors
+  attr_accessor :position, :animations, :scaling, :mirror_x, :rotation, :floors, :opacity
 
   def initialize(position: nil, animations: nil, scaling: nil, floors: nil)
     @position = position || Point.new(0, 0)
@@ -11,6 +11,7 @@ class Entity
     @scaling = scaling || 1
     @rotation = 0
     @floors = floors || []
+    @opacity = 255
 
     @current_animation = nil
     @current_animation_name = nil
@@ -43,7 +44,8 @@ class Entity
       position.x + (mirror_x ? image.width * scaling : 0), position.y, position.z,
       rotation, 0, 0,
       scaling * (mirror_x ? -1 : 1),
-      scaling
+      scaling,
+      Gosu::Color.new(opacity, 255, 255, 255),
     )
   end
 end
