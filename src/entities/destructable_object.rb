@@ -21,16 +21,21 @@ class DestructableObject < GravityEntity
 
   def knock_off
     # Give score
-    if self.base_floors_only
+    if knocked_off?
       $state.juggle_object
     else
+      self.base_floors_only = true
       $state.destroy_object
     end 
 
-    self.base_floors_only = true
     @y_speed = 10
     @x_speed = 3 * ($world.cat.mirror_x ? -1 : 1)
     @rotation_speed = $world.cat.mirror_x ? 1 : -1
+  end
+
+  def knocked_off?
+    # We disable collisions when knocked off so we can just use that to check
+    self.base_floors_only
   end
 
   def tick
