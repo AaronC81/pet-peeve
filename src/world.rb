@@ -64,8 +64,8 @@ class World
   ELEVATED_SCENERIES = [scenery("shelf")]
 
   OBJECT_SET_FOR_SCENERY = {
-    "large_bed" => [object("pillow")],
-    "default" => OBJECTS.reject { |k, _| k == "pillow" },
+    "large_bed" => [object("pillow"), object("stuffed_shark")],
+    "default" => OBJECTS.reject { |k, _| %w{pillow stuffed_shark}.include?(k) },
   }
 
   def generate
