@@ -2,7 +2,7 @@ require_relative '../engine/gravity_entity'
 require_relative 'destructable_object'
 
 class Cat < GravityEntity
-  MOVE_SPEED = 5
+  MOVE_SPEED = 7
   SWIPE_COOLDOWN_FRAMES = 8
 
   def initialize(position)
