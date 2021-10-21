@@ -35,10 +35,23 @@ class GameWindow < Gosu::Window
     @cat = Cat.new(Point.new(200, 200, 100))
     $world.cat = @cat
 
-    MUSIC["menu_music"].play(true)
+    Audio.play_music("menu_music")
   end
 
   def update
+    if Gosu.button_down?(Gosu::KB_J)
+      self.fullscreen = !fullscreen?
+      sleep 1 # really rubbish debounce
+    end
+
+    if Gosu.button_down?(Gosu::KB_K)
+      Audio.volume -= 0.005
+    end
+
+    if Gosu.button_down?(Gosu::KB_L)
+      Audio.volume += 0.005
+    end
+
     $transition.tick
     return if $menus.tick
 

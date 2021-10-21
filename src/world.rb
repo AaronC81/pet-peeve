@@ -80,7 +80,7 @@ class World
   def next_level
     $state.level_complete
     $state.timer_running = false
-    AUDIO["next"].play
+    Audio.play_effect("next")
 
     $transition.fade_out(40) do
       clear

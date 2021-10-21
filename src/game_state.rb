@@ -16,13 +16,13 @@ class GameState
   def reset
     initialize
 
-    MUSIC["game_music"].play(true)
+    Audio.play_music("game_music")
   end
 
   def destroy_object
     @score += 100
 
-    AUDIO["knock"].play
+    Audio.play_effect("knock")
 
     # Is this room now empty?
     if $world.entities.filter { |x| x.is_a?(DestructableObject) }.all?(&:knocked_off?)
@@ -37,7 +37,7 @@ class GameState
   def juggle_object
     @score += 50
 
-    AUDIO["knock"].play
+    Audio.play_effect("knock")
   end
 
   def tick
@@ -45,14 +45,14 @@ class GameState
 
     @timer -= 1 
     if @timer % TICKS_PER_SECOND == 0 && @timer / 60 <= 5 
-      AUDIO["timer"].play
+      Audio.play_effect("timer")
     end
 
     if @timer < 0
       @timer_running = false
       $menus.score = @score
       $menus.transition_into_menu(:game_over)
-      MUSIC["game_music"].stop
+      Audio.stop_music
     end
   end
 

@@ -3,7 +3,7 @@ require_relative 'game_state'
 class Menus
   attr_accessor :showing_menu, :score
 
-  KEY_IMAGES = %w{a d e w space}.to_h do |key|
+  KEY_IMAGES = %w{a d e w space small_j small_k small_l}.to_h do |key|
     [
       key,
       Gosu::Image.new(
@@ -21,7 +21,7 @@ class Menus
     @showing_menu = :pending
     $transition.fade_out(40) do
       @showing_menu = menu
-      MUSIC["menu_music"].play
+      Audio.play_music("menu_music")
       $transition.fade_in(40) {}
     end
   end
@@ -71,6 +71,13 @@ class Menus
 
     KEY_IMAGES['space'].draw(87, 400, 0, GLOBAL_SCALE, GLOBAL_SCALE)
     GameState::BIG_FONT.draw_text("Knock over", 350, 400, 0)
+
+    KEY_IMAGES['small_j'].draw(20, 600, 0, GLOBAL_SCALE, GLOBAL_SCALE)
+    KEY_IMAGES['small_k'].draw(420, 600, 0, GLOBAL_SCALE, GLOBAL_SCALE)
+    KEY_IMAGES['small_l'].draw(500, 600, 0, GLOBAL_SCALE, GLOBAL_SCALE)
+    GameState::MEDIUM_FONT.draw_text("Fullscreen                     Volume", 100, 590, 0)
+
+    KEY_IMAGES
     
     # Vertical divider
     Gosu.draw_line(800, 0, Gosu::Color::WHITE, 800, 700, Gosu::Color::WHITE)
@@ -93,7 +100,7 @@ class Menus
 
   def tick_game_over
     if Gosu.button_down?(Gosu::KB_SPACE)
-      MUSIC["menu_music"].stop
+      Audio.stop_music
 
       $transition.fade_out(40) do
         $world.clear
