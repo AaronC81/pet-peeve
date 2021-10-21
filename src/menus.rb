@@ -1,6 +1,8 @@
 require_relative 'game_state'
 
 class Menus
+  attr_accessor :showing_menu, :score
+
   KEY_IMAGES = %w{a d e w space}.to_h do |key|
     [
       key,
@@ -15,10 +17,23 @@ class Menus
     @showing_menu = :main
   end
 
+  def transition_into_menu(menu)
+    @showing_menu = :pending
+    $transition.fade_out(40) do
+      @showing_menu = menu
+      $transition.fade_in(40) {}
+    end
+  end
+
   def tick
     case @showing_menu
     when :main
       tick_main_menu
+      true
+    when :game_over
+      tick_game_over
+      true
+    when :pending
       true
     else
       false
@@ -30,6 +45,11 @@ class Menus
     when :main
       draw_main_menu
       true
+    when :game_over
+      draw_game_over
+      true
+    when :pending
+      false
     else
       false
     end
@@ -72,11 +92,39 @@ class Menus
       850, 30, 0
     )
 
+    play_prompt
+  end
+
+  def tick_game_over
+    if Gosu.button_down?(Gosu::KB_SPACE)
+      $transition.fade_out(40) do
+        $world.clear
+        $world.generate
+        $world.reposition
+        $state.reset
+
+        @showing_menu = nil
+        $transition.fade_in(40) {}
+      end
+    end
+  end
+
+  def draw_game_over
+    text_start = 800 - GameState::MEDIUM_FONT.text_width("Score") / 2
+    GameState::MEDIUM_FONT.draw_text("Score", text_start, 200, 0)
+
+    text_start = 800 - GameState::BIG_FONT.text_width(score.to_s) / 2
+    GameState::BIG_FONT.draw_text(score, text_start, 280, 0)
+
+    play_prompt
+  end
+
+  def play_prompt
     # Horizontal divider
     Gosu.draw_line(0, 700, Gosu::Color::WHITE, 1600, 700, Gosu::Color::WHITE)
 
     # Start game
     KEY_IMAGES['space'].draw(630, 730, 0, GLOBAL_SCALE, GLOBAL_SCALE)
     GameState::BIG_FONT.draw_text("Press               to start!", 400, 730, 0)
-  end
+  end    
 end

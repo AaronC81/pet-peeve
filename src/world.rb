@@ -84,9 +84,9 @@ class World
     $transition.fade_out(40) do
       clear
       generate
+      reposition
       $state.timer_running = true
-      $transition.fade_in(40) do
-      end
+      $transition.fade_in(40) {}
     end
   end
 
@@ -155,5 +155,10 @@ class World
 
       scenery_x += sgw + x_padding_fn.()
     end
+  end
+
+  def reposition
+    cat.position.x = 120
+    cat.position.y = GLOBAL_FLOOR_Y - 150
   end
 end

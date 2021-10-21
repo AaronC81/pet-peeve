@@ -35,17 +35,19 @@ class GameState
   end
 
   def tick
-    @timer -= 1 if timer_running?
+    return unless timer_running?
 
-    # TODO
+    @timer -= 1 
+
     if @timer < 0
-      puts "Final score: #@score" # TODO
-      exit
+      @timer_running = false
+      $menus.score = @score
+      $menus.transition_into_menu(:game_over)
     end
   end
 
   def seconds_remaining
-    @timer / TICKS_PER_SECOND
+    [0, @timer / TICKS_PER_SECOND].max
   end
   
   def draw
