@@ -4,3 +4,7 @@ GLOBAL_SCALE = 5
 AUDIO = Dir[File.join(RES_ROOT, "audio", "*.wav")].to_h do |s|
   [File.basename(s, ".wav"), Gosu::Sample.new(s)]
 end
+
+MUSIC = Dir[File.join(RES_ROOT, "music", "*.wav")].to_h do |s|
+  [File.basename(s, ".wav"), Gosu::Song.new(s).tap { |m| m.volume = 0.4 }]
+end

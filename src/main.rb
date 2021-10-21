@@ -34,6 +34,8 @@ class GameWindow < Gosu::Window
 
     @cat = Cat.new(Point.new(200, 200, 100))
     $world.cat = @cat
+
+    MUSIC["menu_music"].play(true)
   end
 
   def update

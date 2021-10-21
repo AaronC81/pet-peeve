@@ -21,6 +21,7 @@ class Menus
     @showing_menu = :pending
     $transition.fade_out(40) do
       @showing_menu = menu
+      MUSIC["menu_music"].play
       $transition.fade_in(40) {}
     end
   end
@@ -56,12 +57,7 @@ class Menus
   end
 
   def tick_main_menu
-    if Gosu.button_down?(Gosu::KB_SPACE)
-      $transition.fade_out(40) do
-        @showing_menu = nil
-        $transition.fade_in(40) {}
-      end
-    end
+    tick_game_over
   end
 
   def draw_main_menu
@@ -97,6 +93,8 @@ class Menus
 
   def tick_game_over
     if Gosu.button_down?(Gosu::KB_SPACE)
+      MUSIC["menu_music"].stop
+
       $transition.fade_out(40) do
         $world.clear
         $world.generate

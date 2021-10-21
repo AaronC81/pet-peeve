@@ -5,7 +5,7 @@ class GameState
   BIG_FONT = Gosu::Font.new(120, name: File.join(RES_ROOT, "orange-kid.ttf"))
   MEDIUM_FONT = Gosu::Font.new(80, name: File.join(RES_ROOT, "orange-kid.ttf"))
   TICKS_PER_SECOND = 60
-  GAME_SECONDS = 15
+  GAME_SECONDS = 60
 
   def initialize
     @score = 0
@@ -15,6 +15,8 @@ class GameState
 
   def reset
     initialize
+
+    MUSIC["game_music"].play(true)
   end
 
   def destroy_object
@@ -50,6 +52,7 @@ class GameState
       @timer_running = false
       $menus.score = @score
       $menus.transition_into_menu(:game_over)
+      MUSIC["game_music"].stop
     end
   end
 
