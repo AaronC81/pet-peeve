@@ -5,7 +5,7 @@ class GameState
   BIG_FONT = Gosu::Font.new(120, name: File.join(RES_ROOT, "orange-kid.ttf"))
   MEDIUM_FONT = Gosu::Font.new(80, name: File.join(RES_ROOT, "orange-kid.ttf"))
   TICKS_PER_SECOND = 60
-  GAME_SECONDS = 60
+  GAME_SECONDS = 15
 
   def initialize
     @score = 0
@@ -20,6 +20,8 @@ class GameState
   def destroy_object
     @score += 100
 
+    AUDIO["knock"].play
+
     # Is this room now empty?
     if $world.entities.filter { |x| x.is_a?(DestructableObject) }.all?(&:knocked_off?)
       $world.cleared
@@ -32,12 +34,17 @@ class GameState
 
   def juggle_object
     @score += 50
+
+    AUDIO["knock"].play
   end
 
   def tick
     return unless timer_running?
 
     @timer -= 1 
+    if @timer % TICKS_PER_SECOND == 0 && @timer / 60 <= 5 
+      AUDIO["timer"].play
+    end
 
     if @timer < 0
       @timer_running = false
