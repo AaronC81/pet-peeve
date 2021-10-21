@@ -1,0 +1,3 @@
+- Cat sprites: https://elthen.itch.io/2d-pixel-art-cat-sprites
+- Sound effects: Created with https://sfxr.me/
+- Music: https://opengameart.org/content/4-chiptunes-adventure
