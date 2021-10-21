@@ -54,6 +54,8 @@ class GameWindow < Gosu::Window
 
     if Gosu.button_down?(Gosu::KB_SPACE)
       @cat.swipe
+    else
+      @cat.swipe_release
     end
 
     @cat.tick

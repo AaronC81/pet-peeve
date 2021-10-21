@@ -47,8 +47,13 @@ class Cat < GravityEntity
     self.animation = "jump"
   end
   
+  def swipe_release
+    @waiting_for_swipe_release = false
+  end
+  
   def swipe
-    return if swipe_cooling_down?
+    return if swipe_cooling_down? || @waiting_for_swipe_release
+    @waiting_for_swipe_release = true
     @swipe_cooldown = SWIPE_COOLDOWN_FRAMES
 
     self.animation = "swipe"
