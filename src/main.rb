@@ -7,6 +7,7 @@ require_relative 'entities/scenery'
 require_relative 'world'
 require_relative 'res'
 require_relative 'game_state'
+require_relative 'menus'
 
 Gosu::enable_undocumented_retrofication
 
@@ -24,8 +25,8 @@ $world.extra_floors << World::Floor.new(Point.new(0, World::GLOBAL_FLOOR_Y), 160
 $world.generate
 
 $state = GameState.new
-
 $transition = Transition.new
+$menus = Menus.new
 
 class GameWindow < Gosu::Window
   def initialize
@@ -36,6 +37,9 @@ class GameWindow < Gosu::Window
   end
 
   def update
+    $transition.tick
+    return if $menus.tick
+
     if Gosu.button_down?(Gosu::KB_W)
       @cat.jump 
     end
@@ -55,10 +59,12 @@ class GameWindow < Gosu::Window
     @cat.tick
     $world.entities.map(&:tick)
     $state.tick
-    $transition.tick
   end
 
   def draw
+    $transition.draw
+    return if $menus.draw
+
     @cat.draw
     $world.entities.map(&:draw)
 
@@ -70,7 +76,6 @@ class GameWindow < Gosu::Window
     end
 
     $state.draw
-    $transition.draw
   end
 end
 
