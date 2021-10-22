@@ -1,6 +1,7 @@
 require 'matrix' 
 require_relative 'animation'
 require_relative 'point'
+require_relative 'box'
  
 class Entity
   attr_accessor :position, :animations, :scaling, :mirror_x, :rotation, :floors, :opacity
@@ -47,5 +48,9 @@ class Entity
       scaling,
       Gosu::Color.new(opacity, 255, 255, 255),
     )
+  end
+
+  def bounding_box
+    Box.new(position, image.width * scaling, image.height * scaling)
   end
 end

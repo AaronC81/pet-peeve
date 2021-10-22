@@ -91,4 +91,16 @@ class Cat < GravityEntity
   def swipe_cooling_down?
     @swipe_cooldown > 0
   end
+
+  # Override due to lots of transparency in sprite
+  def bounding_box
+    width = image.width * scaling
+    height = image.height * scaling
+
+    Box.new(
+      Point.new(position.x + width * 0.3, position.y + height * 0.6, position.z),
+      width * 0.4,
+      height * 0.4,
+    )
+  end
 end

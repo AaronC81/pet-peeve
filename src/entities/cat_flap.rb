@@ -43,13 +43,7 @@ class CatFlap < Entity
 
     @arrow.opacity = Math.sin(@tick_count.to_f / 20).abs * 200 + 55
 
-    # Is cat touching?
-    cp = $world.cat.position
-    ci = $world.cat.image
-    if (cp.x + ci.width * GLOBAL_SCALE >= position.x \
-      && cp.x <= position.x + image.width * GLOBAL_SCALE \
-      && cp.y >= position.y - image.height * GLOBAL_SCALE)
-
+    if $world.cat.bounding_box.overlaps?(bounding_box)
       # Next level!
       $world.next_level
       @active = false
