@@ -62,12 +62,12 @@ class Menus
 
   def draw_main_menu
     # Keys
-    KEY_IMAGES['a'].draw(50, 100, 0, GLOBAL_SCALE, GLOBAL_SCALE)
-    KEY_IMAGES['d'].draw(200, 100, 0, GLOBAL_SCALE, GLOBAL_SCALE)
-    GameState::BIG_FONT.draw_text("Move", 350, 100, 0)
-
-    KEY_IMAGES['w'].draw(125, 250, 0, GLOBAL_SCALE, GLOBAL_SCALE)
-    GameState::BIG_FONT.draw_text("Jump", 350, 250, 0)
+    KEY_IMAGES['w'].draw(125, 100, 0, GLOBAL_SCALE, GLOBAL_SCALE)
+    GameState::BIG_FONT.draw_text("Jump", 350, 100, 0)
+    
+    KEY_IMAGES['a'].draw(50, 250, 0, GLOBAL_SCALE, GLOBAL_SCALE)
+    KEY_IMAGES['d'].draw(200, 250, 0, GLOBAL_SCALE, GLOBAL_SCALE)
+    GameState::BIG_FONT.draw_text("Move", 350, 250, 0)
 
     KEY_IMAGES['space'].draw(87, 400, 0, GLOBAL_SCALE, GLOBAL_SCALE)
     GameState::BIG_FONT.draw_text("Knock over", 350, 400, 0)
