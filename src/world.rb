@@ -65,8 +65,19 @@ class World
   ELEVATED_SCENERIES = [scenery("shelf")]
 
   OBJECT_SET_FOR_SCENERY = {
-    "large_bed" => [object("pillow"), object("stuffed_shark")],
-    "default" => OBJECTS.reject { |k, _| %w{pillow stuffed_shark}.include?(k) },
+    "large_bed" => [
+      # Make stuffed animals rarer
+      object("pillow"),
+      object("pillow"),
+      object("pillow"),
+      object("pillow"),
+      object("pillow"),
+      object("stuffed_shark"),
+      object("plush_dog"),
+      object("teddy_bear"),
+      object("plush_fish"),
+    ],
+    "default" => OBJECTS.reject { |k, _| %w{pillow stuffed_shark teddy_bear plush_dog plush_fish}.include?(k) },
   }
 
   # So we do not get too many small objects bunched close to each other
