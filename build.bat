@@ -1,0 +1,1 @@
+ocra ./src/main.rb res/** --windows
