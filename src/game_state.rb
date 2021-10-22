@@ -2,8 +2,11 @@ class GameState
   attr_accessor :timer_running
   alias timer_running? timer_running
 
+  VERY_BIG_FONT = Gosu::Font.new(300, name: File.join(RES_ROOT, "orange-kid.ttf"))
   BIG_FONT = Gosu::Font.new(120, name: File.join(RES_ROOT, "orange-kid.ttf"))
   MEDIUM_FONT = Gosu::Font.new(80, name: File.join(RES_ROOT, "orange-kid.ttf"))
+  SMALL_FONT = Gosu::Font.new(60, name: File.join(RES_ROOT, "orange-kid.ttf"))
+  VERY_SMALL_FONT = Gosu::Font.new(40, name: File.join(RES_ROOT, "orange-kid.ttf"))
   TICKS_PER_SECOND = 60
   GAME_SECONDS = 60
 

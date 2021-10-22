@@ -1,5 +1,14 @@
 require_relative 'game_state'
 
+module Gosu
+  class Font
+    def draw_text_centred(text, *args)
+      x = 800 - text_width(text) / 2
+      draw_text(text, x, *args)
+    end
+  end
+end
+
 class Menus
   attr_accessor :showing_menu, :score
 
@@ -14,7 +23,7 @@ class Menus
   end
 
   def initialize
-    @showing_menu = :main
+    @showing_menu = :splash
   end
 
   def transition_into_menu(menu)
@@ -34,6 +43,9 @@ class Menus
     when :game_over
       tick_game_over
       true
+    when :splash
+      tick_splash_screen
+      true
     when :pending
       true
     else
@@ -48,6 +60,9 @@ class Menus
       true
     when :game_over
       draw_game_over
+      true
+    when :splash
+      draw_splash_screen
       true
     when :pending
       false
@@ -115,13 +130,57 @@ class Menus
   end
 
   def draw_game_over
-    text_start = 800 - GameState::MEDIUM_FONT.text_width("Score") / 2
-    GameState::MEDIUM_FONT.draw_text("Score", text_start, 200, 0)
-
-    text_start = 800 - GameState::BIG_FONT.text_width(score.to_s) / 2
-    GameState::BIG_FONT.draw_text(score, text_start, 280, 0)
+    GameState::MEDIUM_FONT.draw_text_centred("Score", 200, 0)
+    GameState::BIG_FONT.draw_text_centred(score, 280, 0)
 
     play_prompt
+  end
+
+  def draw_splash_screen
+    GameState::VERY_BIG_FONT.draw_text_centred("Pet Peeve", 0, 0)
+
+    GameState::SMALL_FONT.draw_text_centred(
+      "By Aaron Christiansen",
+      300,
+      0
+    )
+    GameState::SMALL_FONT.draw_text_centred(
+      "Twitter/Itch: @OrangeFlash81, GitHub: @AaronC81",
+      360,
+      0
+    )
+    GameState::SMALL_FONT.draw_text_centred(
+      "For the Inaugural Gosu Game Jam",
+      420,
+      0
+    )
+
+    GameState::VERY_SMALL_FONT.draw_text_centred(
+      "Cat sprite: @Elthen (Itch)",
+      530,
+      0
+    )
+    GameState::VERY_SMALL_FONT.draw_text_centred(
+      "Music: Juhani Junkala (OpenGameArt)",
+      560,
+      0
+    )
+    GameState::VERY_SMALL_FONT.draw_text_centred(
+      "Name: @riffraffbacalso (Twitter)",
+      590,
+      0
+    )
+
+    play_prompt
+  end
+
+  def tick_splash_screen
+    if Gosu.button_down?(Gosu::KB_SPACE)
+      $transition.fade_out(40) do
+        @showing_menu = :main
+        $transition.fade_in(40) {}
+      end
+    end
   end
 
   def play_prompt
@@ -129,7 +188,7 @@ class Menus
     Gosu.draw_line(0, 700, Gosu::Color::WHITE, 1600, 700, Gosu::Color::WHITE)
 
     # Start game
-    KEY_IMAGES['space'].draw(630, 730, 0, GLOBAL_SCALE, GLOBAL_SCALE)
-    GameState::BIG_FONT.draw_text("Press               to start!", 400, 730, 0)
+    KEY_IMAGES['space'].draw(650, 730, 0, GLOBAL_SCALE, GLOBAL_SCALE)
+    GameState::BIG_FONT.draw_text("Press               to start!", 420, 730, 0)
   end    
 end
