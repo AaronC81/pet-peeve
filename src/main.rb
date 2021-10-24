@@ -85,13 +85,6 @@ class GameWindow < Gosu::Window
     @cat.draw
     $world.entities.map(&:draw)
 
-    $world.floors.each do |floor|
-      Gosu.draw_line(
-        floor.position.x, floor.position.y, Gosu::Color::WHITE,
-        floor.position.x + floor.width, floor.position.y, Gosu::Color::WHITE
-      )
-    end
-
     $state.draw
   end
 end
